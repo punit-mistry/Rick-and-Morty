@@ -1,30 +1,21 @@
+// Board.js
 import React from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import Column from "./Column";
 
-const Board = () => {
-  const [items, setItems] = useState(defaultItems);
-
-  const onDrop = (dragIndex, overIndex) => {
-    const nextItems = moveItems(items, dragIndex, overIndex);
-    setItems(nextItems);
-  };
-
-  const context = useDraggableContext({
-    onDrop,
-  });
-
+const Board = ({ columns, onDragEnd }) => {
   return (
-    <>
-      {items.map((item, i) => {
-        return (
-          <DraggableItem
-            context={context}
-            key={item.id}
-            index={i}
-            item={item}
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="board">
+        {columns.map((column) => (
+          <Column
+            key={column.id}
+            column={column}
+            cards={column.cards}
           />
-        );
-      })}
-    </>
+        ))}
+      </div>
+    </DragDropContext>
   );
 };
 

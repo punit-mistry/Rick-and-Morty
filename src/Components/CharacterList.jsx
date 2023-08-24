@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 function CharacterList() {
+  const Navigate = useNavigate();
   const [characters, setCharacters] = useState([]);
   const [filters, setFilters] = useState({ name: "", status: "", gender: "" });
   const [noResults, setNoResults] = useState(false); // State to handle no results
@@ -26,6 +27,10 @@ function CharacterList() {
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
+  };
+
+  const ChangePath = (id) => {
+    Navigate(`/chall1/${id}`);
   };
 
   return (
@@ -84,7 +89,10 @@ function CharacterList() {
                 <span>{character.origin.name}</span>
               </div>
               <div className="border-t-2 p-2">
-                <button className="bg-green-600 text-white w-32 h-10 ">
+                <button
+                  className="bg-green-600 text-white w-32 h-10 "
+                  onClick={() => ChangePath(character.id)}
+                >
                   Know More
                 </button>
               </div>
